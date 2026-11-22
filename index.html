@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Full Stack App </title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <p> My Portfolio </p>
+  <nav> <ul> <li> <a href="#intro"> About Me </a> </li>
+        <li> <a href="#mywork"> My Work </a> </li>
+        <li> <a href="#skills"> Technical skills </a> </li>
+        <li> <a href="#contact"> Contact </a> </li> </ul> </nav>
+</header>
+<div id="intro">
+
+<h2>About Me</h2>
+<p> Hi, I'm Riddhi Chopra, a computer science student who likes knowing how things actually work under the hood—from C programming and operating systems to web apps. I enjoy taking a messy problem, breaking it down logically, and building simple, usable pages for it. Outside of coding, pen-and-ink sketching helps me pay attention to small details and layout.</p>
+</div>
+
+<div id="mywork">
+<h2>Projects that I have made so far:</h2>
+
+<h3>OTP Authentication System</h3>
+<p><b>Purpose:</b> Made a user verification flow where a user registers, verifies a one-time code (OTP), logs in, and accesses a protected dashboard.<br>
+<b>What I learned:</b> Setting up routes with Express, sending requests from the frontend to the backend, working with OTPs and JWT tokens, and handling basic auth checks.<br>
+<b>Tech Stack:</b> Node.js, Express, JWT, JavaScript, HTML, CSS.<br>
+<b>How to run locally:</b><br>
+• Start the backend with <code>node server.js</code> on <code>http://localhost:5000</code> and open the OTP auth HTML page.<br>
+• The 6-digit OTP prints in the server terminal so you can test verification, login, and the protected route.
+</p>
+<iframe src="C:\Users\riddh\OneDrive\Desktop\HTML\OTP authentication.html" width="100%" height="500px"></iframe>
+
+<h3>Drag and Drop API</h3>
+<p><b>Purpose:</b> Built a small interactive page where you can drag and drop elements into a target area.<br>
+<b>What I learned:</b> How HTML5 drag-and-drop events work (<code>dragstart</code>, <code>dragover</code>, <code>drop</code>) and how to update the page as things move.<br>
+<b>Tech Stack:</b> HTML, CSS, JavaScript.
+</p>
+<iframe src="C:\Users\riddh\OneDrive\Desktop\HTML\Drag and Drop API.html" width="100%" height="500px"></iframe>
+
+<h3>Calculator</h3>
+<p><b>Purpose:</b> Made a browser calculator that handles basic math operations, chained steps, and clear/delete actions.<br>
+<b>What I learned:</b> Handling button clicks cleanly, catching edge cases like dividing by zero or extra decimals, and laying out buttons with CSS Grid.<br>
+<b>Tech Stack:</b> HTML, CSS (Grid), JavaScript.
+</p>
+<iframe src="C:\Users\riddh\OneDrive\Desktop\HTML\Calculator.html" width="100%" height="500px"></iframe>
+
+<h3>CSS Graphics</h3>
+<p><b>Purpose:</b> Experimented with drawing shapes, simple illustrations, and transitions using only HTML and CSS.<br>
+<b>What I learned:</b> Using <code>@keyframes</code>, transforms, transitions, and positioning without relying on external images or libraries.<br>
+<b>Tech Stack:</b> HTML, CSS.
+</p>
+<iframe src="C:\Users\riddh\OneDrive\Desktop\HTML\CSS Graphics.html" width="100%" height="500px"></iframe>
+
+<h3>Environment Conservation Web Page</h3>
+<p><b>Purpose:</b> Created a multi-section informational page on environmental conservation and sustainability.<br>
+<b>What I learned:</b> Organizing page sections clearly, working with text/tables and layout structure, and keeping the page readable across screen sizes.<br>
+<b>Tech Stack:</b> HTML, CSS, Bootstrap.
+</p>
+<iframe src="C:\Users\riddh\OneDrive\Desktop\HTML\Environment.html" width="100%" height="500px"></iframe>
+</div>
+
+<div id="skills">
+<h2>Technical Skills</h2>
+<p><b>Frontend:</b><br>
+• HTML &amp; CSS: Page structure, Flexbox, CSS Grid, transitions, animations, and basic Bootstrap.<br>
+• JavaScript: DOM updates, event handling, and connecting to APIs with <code>fetch</code>.
+</p>
+
+<p>
+<b>Backend &amp; Databases:</b><br>
+• Node.js &amp; Express: Basic servers, routes, REST APIs, and OTP/JWT auth flows.<br>
+• PHP &amp; Databases: Local PHP scripts, plus working with MongoDB and MySQL.
+</p>
+
+<p>
+<b>Core CS &amp; Tools:</b><br>
+• C Programming, Operating Systems, Computer Architecture, and Software Engineering fundamentals.<br>
+• Tools: XAMPP, StackBlitz, Git, and GitHub.
+  </p>
+</div>
+
+<div id="contact">
+<h2> Contact Me </h2>
+<p> Feel free to reach out if you want to share feedback on my projects, collaborate, or just connect.</p>
+<p> Email: <a id="email-link" href="mailto:riddhi28032025@gmail.com"> riddhi28032025@gmail.com </a> <br>
+<button type="button" id="copy-email-btn">Copy Email</button></p>
+<p id="copy-status"></p>
+</div>
+
+<script>
+const copyBtn=document.getElementById("copy-email-btn");
+const emailText=document.getElementById("email-link").textContent.trim();
+const statusText=document.getElementById("copy-status");
+
+copyBtn.addEventListener("click", async () => {
+try {
+await navigator.clipboard.writeText(emailText);
+statusText.textContent="Email copied to clipboard!";
+statusText.style.color="green"; }
+catch(err) {
+const tempInput=document.createElement("input");
+temInput.value=emailText;
+document.body.appendChild(tempInput);
+tempInput.select();
+document.exeCommand("copy");
+document.body.removeChild(tempInput);
+statusText.textContent="Email copied!";
+statusText.style.color="green"; }
+});
+</script>
+
+<footer>
+<span>© 2026 Riddhi Chopra</span>
+<a href="#">Back to top </a>
+</footer>
+
+</body>
+</html>
+
+

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth System (Register -> OTP -> Login)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    .card {
+      border: 1px solid grey;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 350px;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 90%;
+      padding: 8px;
+      margin: 8px 0;
+    }
+    button {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+    #message {
+      font-weight: bold;
+      color: green;
+      white-space: pre-line;
+    }
+    #message.error {
+      color: crimson;
+    }
+  </style>
+</head>
+<body>
+  <h2>Authentication system (Register -&gt; OTP -&gt; Login)</h2>
+
+  <div class="card">
+    <h3>1. Register</h3>
+    <input type="text" id="reg-username" placeholder="Username">
+    <input type="password" id="reg-password" placeholder="Password">
+    <button onclick="register()">Register</button>
+  </div>
+
+  <div class="card">
+    <h3>2. Verify OTP</h3>
+    <input type="text" id="otp-username" placeholder="Username">
+    <input type="text" id="otp-code" placeholder="Enter 6-Digit OTP Code">
+    <button onclick="verifyOtp()">Verify OTP</button>
+  </div>
+
+  <div class="card">
+    <h3>3. Login</h3>
+    <input type="text" id="login-username" placeholder="Username">
+    <input type="password" id="login-password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div class="card">
+    <h3>4. Protected Content</h3>
+    <button onclick="getDashboard()">Fetch Dashboard Data</button>
+  </div>
+
+  <p id="message"></p>
+
+  <script>
+    const API_URL = "http://localhost:5000";
+    let authToken = null;
+
+    function showMessage(text, isError = false) {
+      const msgEl = document.getElementById("message");
+      msgEl.innerText = text;
+      msgEl.className = isError ? "error" : "";
+    }
+
+    async function register() {
+      const username = document.getElementById("reg-username").value.trim();
+      const password = document.getElementById("reg-password").value;
+
+      if (!username || !password) {
+        return showMessage("Please enter both a username and password.", true);
+      }
+
+      document.getElementById("otp-username").value = username;
+
+      try {
+        const res = await fetch(`${API_URL}/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        showMessage(data.message || (res.ok ? "Registered! Check for OTP." : "Registration failed."), !res.ok);
+      } catch (err) {
+        showMessage("Could not reach backend server. Make sure it is running on port 5000.", true);
+      }
+    }
+
+    async function verifyOtp() {
+      const username = document.getElementById("otp-username").value.trim();
+      const otp = document.getElementById("otp-code").value.trim();
+
+      if (!username || !otp) {
+        return showMessage("Please enter both username and OTP code.", true);
+      }
+
+      document.getElementById("login-username").value = username;
+
+      try {
+        const res = await fetch(`${API_URL}/verify-otp`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, otp })
+        });
+        const data = await res.json();
+        showMessage(data.message || (res.ok ? "OTP verified!" : "OTP verification failed."), !res.ok);
+      } catch (err) {
+        showMessage("Could not reach backend server while verifying OTP.", true);
+      }
+    }
+
+    async function login() {
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value;
+
+      if (!username || !password) {
+        return showMessage("Please enter username and password to log in.", true);
+      }
+
+      try {
+        const res = await fetch(`${API_URL}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.token) {
+          authToken = data.token;
+          showMessage(data.message || "Logged in successfully!");
+        } else {
+          showMessage(data.message || "Login failed.", true);
+        }
+      } catch (err) {
+        showMessage("Could not reach backend server while logging in.", true);
+      }
+    }
+
+    async function getDashboard() {
+      if (!authToken) {
+        return showMessage("Please log in first to access protected content.", true);
+      }
+
+      try {
+        const res = await fetch(`${API_URL}/dashboard`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${authToken}`
+          }
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          const details = data.message || JSON.stringify(data, null, 2);
+          showMessage(details);
+        } else {
+          showMessage(data.message || "Access denied.", true);
+        }
+      } catch (err) {
+        showMessage("Could not fetch dashboard data.", true);
+      }
+    }
+  </script>
+</body>
+</html>
