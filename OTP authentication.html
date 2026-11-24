@@ -1,41 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auth System (Register -> OTP -> Login)</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      line-height: 1.6;
-    }
-    .card {
-      border: 1px solid grey;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 350px;
-      margin-bottom: 20px;
-    }
-    input {
-      width: 90%;
-      padding: 8px;
-      margin: 8px 0;
-    }
-    button {
-      padding: 8px 16px;
-      cursor: pointer;
-    }
-    #message {
-      font-weight: bold;
-      color: green;
-      white-space: pre-line;
-    }
-    #message.error {
-      color: crimson;
-    }
-  </style>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auth System (Register -> OTP -> Login)</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  padding: 20px;
+  line-height: 1.5;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ccfbf1;
+}
+
+body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  align-content: start;
+}
+
+h2, #message {
+  grid-column: 1 / -1;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card h3 {
+  font-size: 15px;
+  color: #0f766e;
+  margin-bottom: 2px;
+}
+
+input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  font-size: 13px;
+  color: #1e293b;
+  background-color: #f8fafc;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #0f766e;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+button {
+  margin-top: auto;
+  padding: 9px 14px;
+  background: linear-gradient(135deg, #0f766e, #0d9488);
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+button:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+#message {
+  font-size: 13px;
+  font-weight: 600;
+  color: #065f46;
+  background-color: #d1fae5;
+  border: 1px solid #6ee7b7;
+  padding: 10px 14px;
+  border-radius: 8px;
+  white-space: pre-line;
+}
+
+#message:empty {
+  display: none;
+}
+
+#message.error {
+  color: #991b1b;
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+}
+
+@media (max-width: 600px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+}</head>
 <body>
   <h2>Authentication system (Register -&gt; OTP -&gt; Login)</h2>
 
